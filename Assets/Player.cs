@@ -10,50 +10,72 @@ public class Player : MonoBehaviour
    public float jumpSpeed = 5f;
    public int jump = 2;
    private int j;
-   private int stars = 0;
-   public Text text;
-   public Text time;
-   private int maxStars;
+
    public int v = 1;
    public int r = 1;
+   
+   public Text starsText;
+   private int stars = 0;
+   private int maxStars=0;
+  
+  
+   private Animator anim;
+   private Rigidbody rb;
+  
    private float t;
+   public Text time;
    void Start ()
    {
-    
-      var maxStars = GameObject.FindGameObjectsWithTag("star").Length;
-      text.text = "stars: " + stars + "/" + this.maxStars;
-      
-      j = jump;
+   maxStars = GameObject.FindGameObjectsWithTag("star").Length;
+   starsText.text = "stars: 0" + "/";// + maxStars);
+   j = jump;
    }
- 
- void Update()
- {
-    t = Time.fixedTime;
-    time.text = t.ToString();
-    Rigidbody rb= GetComponent<Rigidbody>();
-       
-    if (Input.GetKeyDown (KeyCode.Space ) && j > 0 )
-    {
-       rb.velocity += jumpSpeed * Vector3.up;
-       j--;
-    } 
-    if (Input.GetKey(KeyCode.UpArrow))
-       rb.MovePosition(transform.position + (transform.forward) * (Time.fixedDeltaTime * v));
-    else if (Input.GetKey(KeyCode.DownArrow))
-       rb.MovePosition(transform.position - (transform.forward) * (Time.fixedDeltaTime * v));
-    if (Input.GetKey(KeyCode.RightArrow))
-       transform.Rotate(Vector3.up * (-r * Time.fixedDeltaTime), Space.Self);
-    else if (Input.GetKey(KeyCode.LeftArrow))
-       transform.Rotate(Vector3.up * (+r * Time.fixedDeltaTime), Space.Self);
- }
+
+   void Update()
+   {
+      anim = GetComponent<Animator>();
+      t = Time.fixedTime;
+      time.text = t.ToString();
+      rb = GetComponent<Rigidbody>();
+         if (Input.GetKeyDown(KeyCode.Space) && j > 0)
+         {
+           // anim.SetBool("jump", true);
+            anim.SetBool("walk", false);
+            rb.velocity += jumpSpeed * Vector3.up;
+            j--;
+         }
+         if (Input.GetKey(KeyCode.UpArrow))
+         {
+            anim.SetBool("walk", true);
+            rb.MovePosition(transform.position + (transform.forward) * (Time.fixedDeltaTime * v));
+         }
+         else if (Input.GetKey(KeyCode.DownArrow))
+         {
+            anim.SetBool("walkback", true);
+            rb.MovePosition(transform.position - (transform.forward) * (Time.fixedDeltaTime * v));
+         }
+         if (Input.GetKey(KeyCode.LeftArrow))
+            transform.Rotate(Vector3.up * (-r * Time.fixedDeltaTime), Space.Self);
+         else if (Input.GetKey(KeyCode.RightArrow))
+            transform.Rotate(Vector3.up * (+r * Time.fixedDeltaTime), Space.Self);
+         if(!Input.anyKey)
+         {
+         anim.SetBool("walk", false);
+         anim.SetBool("walkback", false);
+         anim.SetBool("jump", false);
+         }
+   }
  void OnCollisionEnter(Collision coll)
  {
-    if(coll.gameObject.CompareTag("JUMP"))
-          j = jump;
-    if (coll.gameObject.CompareTag("star"))
+    if (coll.gameObject.CompareTag("jump"))
+    {
+       
+       j = jump;
+    }
+    else if (coll.gameObject.CompareTag("star"))
     {
        stars++;
-       text.text = "stars: " + stars + "/" + maxStars; 
+       starsText.text = "stars: " + stars + "/" + maxStars; 
     }
  }
  

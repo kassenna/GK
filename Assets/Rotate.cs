@@ -10,7 +10,7 @@ public class Rotate : MonoBehaviour
     
     void Update () {
         smooth = Time.deltaTime * durationTime;
-        transform.Rotate(vec);
+        transform.Rotate(-vec);
     }
     
 
