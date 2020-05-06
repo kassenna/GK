@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
    public int r = 1;
    
    public bool hat = false;
+   public bool big = false;
    public GameObject hatObject;
    
    public Text starsText;
@@ -41,9 +42,10 @@ public class Player : MonoBehaviour
       t = Time.fixedTime;
       time.text = t.ToString();
       rb = GetComponent<Rigidbody>();
-         if (Input.GetKeyDown(KeyCode.Space) && j > 0)
+      if (rb.velocity.y.Equals(0))
+         j = 2;
+      if (Input.GetKeyDown(KeyCode.Space) && j > 0)
          {
-           // anim.SetBool("jump", true);
             anim.SetBool("walk", false);
             rb.velocity += jumpSpeed * Vector3.up;
             j--;
@@ -68,22 +70,31 @@ public class Player : MonoBehaviour
          anim.SetBool("walkback", false);
          anim.SetBool("jump", false);
          }
+         //if(rb.)
    }
  void OnCollisionEnter(Collision coll)
  {
     if (coll.gameObject.CompareTag("jump"))
     {
-       j = jump;
+   //    j = 0;
     }
     else if (coll.gameObject.CompareTag("star"))
     {
        stars++;
        starsText.text = "stars: " + stars + "/" + maxStars; 
     }
-    else if(coll.gameObject.CompareTag("snowfalke") )
+    else if (coll.gameObject.CompareTag("present"))
     {
-    hat = true;
-    hatObject.SetActive(true);
+       if (big)
+       {
+          hatObject.SetActive(true);
+          hat = true;
+       }
+       else
+       {
+          big = true;
+          gameObject.transform.localScale += new Vector3(0, 0.15f, 0);
+       }
     }
     else if (coll.gameObject.CompareTag("enemies"))
     {
@@ -92,6 +103,13 @@ public class Player : MonoBehaviour
           hat = false;
           hatObject.SetActive(false);
        }
+       else if (big)
+       {
+          big = false;
+          gameObject.transform.localScale -= new Vector3(0, 0.15f, 0);
+       }
+       else
+       { }
     }
  }
  
