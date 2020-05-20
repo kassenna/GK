@@ -1,50 +1,35 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Turtle : MonoBehaviour
 {
-    public float velocity = 5;
-    public float time;
-    private Random random;
-    public float angle = 90;
-    private Animator anim;
-    private bool spikes = true;
-    private void Start()
+
+    private float xm;
+    private float zm;
+    public float velocity = 1;
+    void Start()
     {
-        time = (float)(Random.value%10)/10.0f;
+        transform.localPosition = new Vector3(0f, 3, 0f);
+        xm = transform.parent.lossyScale.x * 0.45f;
+        zm = transform.parent.localScale.z * 0.45f;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
-        time -= Time.deltaTime;
-        if (time < 0)
-        {
-            anim = GetComponent<Animator>();
-            time =2+ (float) (Random.value % 10) / 10.0f;
-            if (spikes)
-            {
-                anim.SetBool("spikes", true);
-                spikes = false;
-            }
-            else
-            {
-                anim.SetBool("spikes", false);
-                spikes = true;
-            }
-            if(spikes)
-                gameObject.transform.position += velocity * transform.forward;
-        }
-        
        
-    }
+          var rb = GetComponent<Rigidbody>();
+          if (Mathf.Abs(transform.localPosition.x) <= xm && Mathf.Abs(transform.localPosition.z) <= zm)
+            rb.MovePosition(transform.position + (transform.forward) * (Time.deltaTime * velocity));
+        else{
+            transform.Rotate(Vector3.up * -90, Space.Self);
+            rb.MovePosition(transform.position + (transform.forward) * (Time.deltaTime * velocity));
+                      
+        }
 
-    private void OnCollisionEnter(Collision other)
-    {
-        transform.Rotate(new Vector3(0, 1, 0), angle);
+        
     }
 }

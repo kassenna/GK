@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
 {
    public float jumpSpeed = 5f;
    public int jump = 2;
-   private int j;
+   public int j;
 
    public int v = 1;
    public int r = 1;
@@ -18,29 +18,22 @@ public class Player : MonoBehaviour
    public bool big = false;
    public GameObject hatObject;
    
-   public Text starsText;
-   private int stars = 0;
-   private int maxStars=0;
-  
  
    private Animator anim;
    private Rigidbody rb;
   
-   private float t;
-   public Text time;
+  
    void Start ()
    {
     hatObject.SetActive(false);
-   maxStars = GameObject.FindGameObjectsWithTag("star").Length;
-   starsText.text = "stars: 0" + "/";// + maxStars);
+
    j = jump;
    }
 
    void Update()
    {
       anim = GetComponent<Animator>();
-      t = Time.fixedTime;
-      time.text = t.ToString();
+     
       rb = GetComponent<Rigidbody>();
       if (rb.velocity.y.Equals(0))
          j = 2;
@@ -53,24 +46,24 @@ public class Player : MonoBehaviour
          if (Input.GetKey(KeyCode.UpArrow))
          {
             anim.SetBool("walk", true);
-            rb.MovePosition(transform.position + (transform.forward) * (Time.fixedDeltaTime * v));
+            rb.MovePosition(transform.position + (transform.forward) * (Time.deltaTime * v));
          }
          else if (Input.GetKey(KeyCode.DownArrow))
          {
             anim.SetBool("walkback", true);
-            rb.MovePosition(transform.position - (transform.forward) * (Time.fixedDeltaTime * v));
+            rb.MovePosition(transform.position - (transform.forward) * (Time.deltaTime * v));
          }
          if (Input.GetKey(KeyCode.LeftArrow))
-            transform.Rotate(Vector3.up * (-r * Time.fixedDeltaTime), Space.Self);
+            transform.Rotate(Vector3.up * (-r * Time.deltaTime), Space.Self);
          else if (Input.GetKey(KeyCode.RightArrow))
-            transform.Rotate(Vector3.up * (+r * Time.fixedDeltaTime), Space.Self);
+            transform.Rotate(Vector3.up * (+r * Time.deltaTime), Space.Self);
          if(!Input.anyKey)
          {
          anim.SetBool("walk", false);
          anim.SetBool("walkback", false);
-         anim.SetBool("jump", false);
+         
          }
-         //if(rb.)
+   
    }
  void OnCollisionEnter(Collision coll)
  {
@@ -80,8 +73,7 @@ public class Player : MonoBehaviour
     }
     else if (coll.gameObject.CompareTag("star"))
     {
-       stars++;
-       starsText.text = "stars: " + stars + "/" + maxStars; 
+       ControllerGame.incStar();
     }
     else if (coll.gameObject.CompareTag("present"))
     {

@@ -5,33 +5,43 @@ using UnityEngine;
 
 public class PlatformMoving : MonoBehaviour
 {
-    private bool dir = true;
     public Vector3 direction;
-    public int steps;
-    public int i;
-    private Rigidbody rb;
+    public float velocity = 0.1f;
+    private int _steps=0;
+    private int i=0;
+    private Rigidbody _rb;
+
     private void Start()
     {
-        i = 0;
+        _steps = (int) ((direction.magnitude)/velocity);
+        direction = direction / _steps;
     }
 
     void Update()
     {
 
-        rb = GetComponent<Rigidbody>();
-        if (dir)
+       
+        transform.position += direction ;
+         i++;
+         if (i == _steps)
         {
-            rb.MovePosition(transform.position + (direction) * Time.fixedDeltaTime);
-            i++;
-            if (i == steps) dir = false;
+            direction = -direction;
+            i = 0;
         }
-        else
+    }
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag.Contains("Player") )
         {
-            rb.MovePosition(transform.position - (direction) * Time.fixedDeltaTime);
-            i--;
-            if (i == 0) dir = true;
+            other.transform.parent = transform;
         }
-
+    }
+    private void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.tag.Contains("Player") )
+        {
+            other.transform.parent = null;
+        }
     }
 
 }
