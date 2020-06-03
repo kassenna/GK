@@ -6,24 +6,25 @@ public class ToggleOnOf : MonoBehaviour
 {
 
     public new Vector3 transform;
-    public int time;
-    public int velocity;
-   
-    private int _i;
+    private int time;
+    public float velocity;
+    private Rigidbody t;
+    public int _i;
     private bool _isTouched = false;
     private bool _toggle = false;
     void Start()
     {
-        time = velocity * (int)transform.magnitude;
+        time =  (int)(transform.magnitude/ velocity);
         _i = time;
         transform = transform / time;
+        t = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
         if (_isTouched )
         {
-            var t = GetComponent<Rigidbody>();
+       
             if (_toggle)
             {
                 _i--;
@@ -49,8 +50,7 @@ public class ToggleOnOf : MonoBehaviour
 
     void trigger()
     {
-        var t = GetComponent<Rigidbody>();
-        t.constraints = RigidbodyConstraints.FreezeRotation;
+         t.constraints = RigidbodyConstraints.FreezeRotation;
         _isTouched = true;
         _toggle = !_toggle;
     }

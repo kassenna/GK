@@ -9,8 +9,10 @@ public class ToggleOn: MonoBehaviour
         public Vector3 transforms;
         public int time;
         private bool isTouched = false;
+        private Rigidbody t;
         void Start()
         {
+            t = GetComponent<Rigidbody>();
             time =(int) transforms.magnitude;
             transforms = transforms / time;
         }
@@ -20,7 +22,7 @@ public class ToggleOn: MonoBehaviour
             if (isTouched )
             {
                 time--;
-                var t = GetComponent<Rigidbody>();
+              
                 t.position += transforms;
                 if (time == 0)
                 {
@@ -32,7 +34,6 @@ public class ToggleOn: MonoBehaviour
 
         void trigger()
         {
-            var t = GetComponent<Rigidbody>();
             t.constraints = RigidbodyConstraints.FreezeRotation;
             isTouched = true;
         }

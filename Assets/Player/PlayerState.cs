@@ -1,38 +1,35 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static ControllerGame;
 
 public class PlayerState : MonoBehaviour
 {
-    public bool hat = false;
-    public bool big = false;
+    static public bool hat = false;
+    static public bool big = false;
     public GameObject hatObject;
+    static public bool completeLevel;
+    static public bool isDied;
     // Start is called before the first frame update
     void Start()
     {
+        isDied = false;
+        completeLevel = false;
         hatObject.SetActive(false);
     }
+
+    private void Update()
+    {
+        if (gameObject.transform.position.y < -20)
+            isDied = true;
+    }
+
     void OnCollisionEnter(Collision coll)
     {
-       if (coll.gameObject.CompareTag("star"))
-        {
-            ControllerGame.incStar();
-        }
-        else if (coll.gameObject.CompareTag("present"))
-        {
-            if (big)
-            {
-                hatObject.SetActive(true);
-                hat = true;
-            }
-            else
-            {
-                big = true;
-                gameObject.transform.localScale += new Vector3(0, 0.15f, 0);
-            }
-        }
-        else if (coll.gameObject.CompareTag("enemies"))
+        
+        if (coll.gameObject.CompareTag("enemies"))
         {
             if (hat)
             {
@@ -46,7 +43,7 @@ public class PlayerState : MonoBehaviour
             }
             else
             {
-                SceneManager.LoadScene(0, LoadSceneMode.Single);
+                isDied = true;
             }
         }
     }

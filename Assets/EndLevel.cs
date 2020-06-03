@@ -6,12 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class EndLevel : MonoBehaviour
 {
-
-    private void OnCollisionEnter(Collision other)
+    
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag.Equals("Player"))
         {
-            SceneManager.LoadScene("Menu");
+            PlayerState.completeLevel = true;
+          
         }
         
     }

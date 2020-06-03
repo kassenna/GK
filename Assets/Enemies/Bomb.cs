@@ -9,9 +9,13 @@ public class Bomb : MonoBehaviour
     public float velocity = 1;
     public float timeExplosion = 1;
     public float rotate = 20;
+
+    private Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
+
         gameObject.tag = "Untagged";
     }
 
@@ -20,7 +24,6 @@ public class Bomb : MonoBehaviour
     {
         if (isTouched)
         {
-            var rb = GetComponent<Rigidbody>();
             rb.MovePosition(transform.position + (transform.forward) * (Time.deltaTime * velocity));
             transform.Rotate(Vector3.up * rotate*Time.deltaTime, Space.Self);
             timeExplosion -= Time.deltaTime;

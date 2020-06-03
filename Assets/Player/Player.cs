@@ -20,22 +20,21 @@ public class Player : MonoBehaviour
   
    void Start ()
    {
+      anim = GetComponent<Animator>();
       j = jump;
+      rb = GetComponent<Rigidbody>();
    }
 
    void Update()
    {
-      anim = GetComponent<Animator>();
-     
-      rb = GetComponent<Rigidbody>();
-      if (rb.velocity.y.Equals(0))
-         j = 2;
+     if (rb.velocity.y.Equals(0))
+                   j = 2;
       if (Input.GetKeyDown(KeyCode.Space) && j > 0)
-         {
-            anim.SetBool("walk", false);
-            rb.velocity += jumpSpeed * Vector3.up;
-            j--;
-         }
+     {
+        anim.SetBool("walk", false);
+        rb.velocity += jumpSpeed * Vector3.up;
+        j--; 
+     }
          if (Input.GetKey(KeyCode.UpArrow))
          {
             anim.SetBool("walk", true);
@@ -54,8 +53,9 @@ public class Player : MonoBehaviour
          {
          anim.SetBool("walk", false);
          anim.SetBool("walkback", false);
-         
          }
-   
+    
+         
+
    }
 }

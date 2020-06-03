@@ -3,11 +3,7 @@
 
     public class ButtonPressure : MonoBehaviour
     {
-         private GameObject gameObjects;
-        void Start()
-        {
-            gameObjects = gameObject.transform.GetChild(0).gameObject;
-        }
+         public GameObject gameObjects;
 
         private void OnTriggerEnter(Collider other)
         {
