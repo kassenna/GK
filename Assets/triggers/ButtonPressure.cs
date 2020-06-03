@@ -9,7 +9,7 @@
         {
             if (other.gameObject.tag.Equals("Player"))
             {
-                gameObjects.SendMessage("trigger", 1);
+                gameObjects.SendMessage("trigger", true);
             }
         }
 
@@ -17,7 +17,7 @@
         {
             if (other.gameObject.tag.Equals("Player"))
             {
-                gameObjects.SendMessage("trigger", 0);
+                gameObjects.SendMessage("trigger", false);
             }
         }
 

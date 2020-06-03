@@ -6,6 +6,6 @@ public class Key : MonoBehaviour
 {
     public void trigger()
     {
-        gameObject.SetActive(!gameObject.active);
+        gameObject.SetActive(false);
     }
 }

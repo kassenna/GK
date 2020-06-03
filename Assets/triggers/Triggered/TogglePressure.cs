@@ -8,7 +8,7 @@ public class TogglePressure : MonoBehaviour
     
     public Vector3 movePosition;
     public float velocity;
-    private int time;
+    public int time;
     private int _i;
 
     private bool _toggle = true;
@@ -41,7 +41,7 @@ public class TogglePressure : MonoBehaviour
     }
 
    
-    void trigger(bool isCollide)
+    public void  trigger(bool isCollide)
     {
         _pressure = isCollide;
        if (isCollide)
