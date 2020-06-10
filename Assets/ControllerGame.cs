@@ -29,8 +29,12 @@ public class ControllerGame : MonoBehaviour
     }
     void Update()
     {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            bClickExit();
+        }
         t = Time.fixedTime;
-        time.text = ((int)t).ToString();
+        time.text = "time: " + ((int)t).ToString();
         starsText.text = "stars: " + stars + "/" + maxStars;
         if (PlayerState.completeLevel)
         {

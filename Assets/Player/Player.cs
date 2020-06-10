@@ -31,19 +31,20 @@ public class Player : MonoBehaviour
                    j = 2;
       if (Input.GetKeyDown(KeyCode.Space) && j > 0)
      {
-        anim.SetBool("walk", false);
+       
         rb.velocity += jumpSpeed * Vector3.up;
         j--; 
+        anim.SetBool("walk", false);
      }
          if (Input.GetKey(KeyCode.UpArrow))
          {
             anim.SetBool("walk", true);
-            rb.MovePosition(transform.position + (transform.forward) * (Time.deltaTime * v));
+            rb.MovePosition(transform.localPosition + (transform.forward) * (Time.deltaTime * v));
          }
          else if (Input.GetKey(KeyCode.DownArrow))
          {
             anim.SetBool("walkback", true);
-            rb.MovePosition(transform.position - (transform.forward) * (Time.deltaTime * v));
+            rb.MovePosition(transform.localPosition - (transform.forward) * (Time.deltaTime * v));
          }
          if (Input.GetKey(KeyCode.LeftArrow))
             transform.Rotate(Vector3.up * (-r * Time.deltaTime), Space.Self);

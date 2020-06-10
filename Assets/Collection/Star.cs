@@ -10,7 +10,8 @@ public class Star : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         ControllerGame.incStar();
-        
+        gameObject.GetComponentInParent<AudioSource>().Play();
+
         Destroy(gameObject);
         }
     }

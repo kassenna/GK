@@ -11,7 +11,7 @@ public class TogglePressure : MonoBehaviour
     public int time;
     private int _i;
 
-    private bool _toggle = true;
+    private bool _toggle = false;
     private Rigidbody _rb;
     
     private bool _pressure=false;
@@ -30,12 +30,12 @@ public class TogglePressure : MonoBehaviour
             if (_toggle && _i>0 )
             {
                 _i--;
-                _rb.MovePosition(_rb.position + movePosition);
+                _rb.MovePosition(transform.position + movePosition);
             }
             else if(!_toggle && _i < time)
             {
                 _i++;
-                _rb.MovePosition(_rb.position - movePosition);
+                _rb.MovePosition(transform.position - movePosition);
             } 
         }
     }

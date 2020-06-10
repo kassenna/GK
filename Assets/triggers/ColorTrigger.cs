@@ -6,12 +6,9 @@ public class ColorTrigger : MonoBehaviour
 {
     public Color color;
 
-    private void OnEnable()
+    public void OnTriggerEnter(Collider other)
     {
-        GameObject g = gameObject.transform.GetChild(0).gameObject;
-        Renderer ren = GetComponent<Renderer>(); 
-        ren.material.SetColor("_Color", color);
-        ren =g.GetComponent<Renderer>(); 
+        var ren =GetComponent<Renderer>(); 
         ren.material.SetColor("_Color", color);
     }
 }

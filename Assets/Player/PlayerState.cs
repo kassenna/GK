@@ -23,7 +23,28 @@ public class PlayerState : MonoBehaviour
     private void Update()
     {
         if (gameObject.transform.position.y < -20)
-            isDied = true;
+            {isDied = true;
+            hat = false;
+            big = false;
+            
+            }
+        hatObject.SetActive(hat);
+    }
+
+    void collisionPresent()
+    {
+        if (PlayerState.big)
+        {
+            PlayerState.hat = true;
+                
+        }
+        else
+        {
+            PlayerState.big = true;
+            gameObject.transform.localScale += new Vector3(0, 0.15f, 0);
+        }
+
+    
     }
 
     void OnCollisionEnter(Collision coll)
@@ -34,8 +55,7 @@ public class PlayerState : MonoBehaviour
             if (hat)
             {
                 hat = false;
-                hatObject.SetActive(false);
-            }
+              }
             else if (big)
             {
                 big = false;
